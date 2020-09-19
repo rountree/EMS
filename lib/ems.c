@@ -30,13 +30,13 @@ void ems_init(FILE* fp, int id)
    * that that has been done before                         */    
    
   char buf[MAXSTRLEN];
-  char fbuf[MAXSTRLEN];
+  char fbuf[MAXDSTSTRLEN];
 
   if(prm_read_char(fp,"log_file", buf))
   {
     sprintf(fbuf, "%s", buf);
     if (id > 0)
-      sprintf(fbuf, "%s_%d", buf, id);
+      snprintf(fbuf, MAXDSTSTRLEN, "%s_%d", buf, id);
 
     log_set_output(fbuf);
         emstag(LINFO,"lib:ems:init","Set log file: %s",buf); 

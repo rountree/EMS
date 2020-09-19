@@ -30,6 +30,11 @@ int strncasecmp(const char *s1, const char *s2, int n);
 /* Maximum string length */
 #define MAXSTRLEN (2048)
 
+/* Use when a MAXSTRLEN string is an input to snprintf().  
+ * Fixes -Werror=format-overflow warnings.
+ */
+#define MAXDSTSTRLEN (4096)
+
 /* Maximum length of a file name */
 #define MAXFNAMELEN (200)
 
