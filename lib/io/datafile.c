@@ -512,7 +512,7 @@ int df_find_record(datafile_t *df, double r, int *before, int *after,
 void df_read_records(datafile_t *df, df_variable_t *v, int start_rec,
                      int nrecs)
 {
-  int i, n;
+  int i;
 
   if (df->type == DFT_ASCII)
     return;
@@ -1952,7 +1952,7 @@ void multi_netcdf_read_data(datafile_t *df, df_variable_t *v, int rec) {
 
   df_multi_t *fd = (df_multi_t *)df->private_data;
   if (fd != NULL) {
-    int i, j, nr = 0, jv;
+    int i, j, nr = 0;
     
     /* Start counter where we left off last */
     for (i=0; i<fd->nfiles; ++i) {
@@ -2020,7 +2020,6 @@ This routine calls quit() if anything goes wrong
 
 void mempack_read(char *name, datafile_t *df, int type)
 {
-  int id;
   int i, j, m;
   char *vars[MAXLINELEN], *units[MAXLINELEN], *xyzunits[MAXLINELEN];
   char coords[MAXLINELEN];
@@ -2278,7 +2277,6 @@ void mempack_read_records(datafile_t *df, int varid) {
  */
 void mempack_read_data(datafile_t *df, df_variable_t *v, int r, int roffset)
 {
-  int start[2];
   int count[2];
   int i = 0, j, n;
   int index = r - v->start_record;
@@ -2292,10 +2290,6 @@ void mempack_read_data(datafile_t *df, df_variable_t *v, int r, int roffset)
        v->name);
 
   if (v->dim_as_record) {
-    if (df->rec_modulus)
-      start[i] = (r % df->nrecords) - roffset;
-    else
-      start[i] = r - roffset;
     count[i++] = 1;
   }
 
@@ -2352,7 +2346,7 @@ void mempack_free(datafile_t *df)
 
 int mempack_read_file(char *mpname, datafile_t *df)
 {
-  int m, n;
+  int m;
   FILE *fp;
   df_mempack_t *data = (df_mempack_t *)df->private_data;
 
