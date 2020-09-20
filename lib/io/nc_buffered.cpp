@@ -65,7 +65,7 @@ public:
   /* No constructor, use default */
   void init(size_t len) {
     data = new T[len];
-    time = -1; /* unset */
+    time = 0; /* unset */
     sem_init(&done_read, 0, 0);
     sem_init(&done_copy, 0, 1); // force first read
   }
@@ -124,7 +124,7 @@ private:
   T *data;
 
   /* Keep track of time index */
-  int time;
+  size_t time;
 
   /* Use semaphores for synchronisation */
   sem_t done_read;
@@ -143,7 +143,6 @@ public:
 	    pthread_mutex_t *imtx)
     : tStartIdx(time)
   {
-    size_t start[2];
     int unlimdim;
 
     /* Allocate buffers and initialise each */
@@ -230,7 +229,7 @@ template <class T>
 void ncBuffers<T>::doNcRead(void)
 {
   int tIdx = tStartIdx;
-  size_t start[2], stacksz;
+  size_t start[2];
   start[iDATA] = 0L;
   bool done = false;
   while(!done) {
