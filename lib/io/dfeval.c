@@ -127,7 +127,6 @@ int df_eval_period(datafile_t *df, int vid, double r, double dr, double **ptr)
   int before0, before1;
   int after0, after1;
   double frac;
-  double *vals;
   double r0 = r - dr/2;
   double r1 = r + dr/2;
   int numrecs = 0;
@@ -205,12 +204,9 @@ double df_eval_coords(datafile_t *df, df_variable_t *v, double r,
     df_coord_system_t *cs = v->csystem;
     int nc = 0;
     int nd = 0;
-    int in[2];
 
     recvals[0] = 0.0;
     recvals[1] = 0.0;
-    in[0] = 0;
-    in[1] = 0;
 
     if (cs == NULL)
       quit
@@ -716,7 +712,6 @@ double interp_nearest_within_eps(datafile_t *df, df_variable_t *v, int record,
   double *d = VAR_1D(v)[record - v->start_record];
   df_variable_t *vars = df->variables;
   int i, j;
-  float idist;
   double d_eps = 0.0005; /* in degrees ~ 50m */
   
   /*
@@ -944,12 +939,11 @@ over cloud values.
 double interp_linear_flagged(datafile_t *df, df_variable_t *v, int record,
 			     double coords[])
 {
-  int i, j, ii=0;
-  double val = 0.0, dval;
+  int i, j;
+  double val = 0.0;
   double indices[MAXNUMDIMS];
   int nd = df_get_num_dims(df, v);
   int *dimids = df_get_dim_ids(df, v);
-  int ci, cj;
 
   if (df_ctoi(df, v, coords, indices) == nd) {
     double findices[MAXNUMDIMS];
@@ -1073,8 +1067,8 @@ interpolation scheme. Fills missing values with the nearest valid value.
 double interp_linear_filled(datafile_t *df, df_variable_t *v, int record,
 			    double coords[])
 {
-  int i, j, ii=0;
-  double val = 0.0, dval;
+  int i, j;
+  double val = 0.0;
   double indices[MAXNUMDIMS];
   int nd = df_get_num_dims(df, v);
   int *dimids = df_get_dim_ids(df, v);
@@ -1173,9 +1167,8 @@ valid value.
 double interp_linear_bathy(datafile_t *df, df_variable_t *v, int record,
 			    double coords[])
 {
-  int i, j, ii=0;
+  int i, j;
   double val = (v->type & VT_BATHY) ? NaN : 0.0;
-  double dval;
   double indices[MAXNUMDIMS];
   int nd = df_get_num_dims(df, v);
   int *dimids = df_get_dim_ids(df, v);
@@ -1278,7 +1271,7 @@ static double find_close(datafile_t *df, df_variable_t *v, int r, int *is)
   double mindist;
   int level;
   int xlim, ylim;
-  int ic, jc, kc;
+  int ic=0, jc=0, kc=0;
   double val, nval;
 
   /* Get the indexes */
@@ -1391,7 +1384,7 @@ static double find_close_bathy(datafile_t *df, df_variable_t *v, int r, int *is)
   double mindist;
   int level;
   int xlim, ylim;
-  int ic, jc, kc;
+  int ic=0, jc=0, kc=0;
   double val, nval;
 
   /* Get the indexes */
