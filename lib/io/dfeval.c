@@ -1024,7 +1024,7 @@ double interp_linear_flagged(datafile_t *df, df_variable_t *v, int record,
 	dval[i] = dval[j];
       /* Fill subsequent non-valid corners */
       for (; j < ncorners; ++j) {
-	for (i = 0; i < ncorners, i != j; ++i) 
+	for (i = 0; i != j; ++i) 
 	  if (!mask[i]) dval[j] = dval[i];
       }
     } else {
@@ -1032,7 +1032,7 @@ double interp_linear_flagged(datafile_t *df, df_variable_t *v, int record,
       for (j = 0; j < ncorners; ++j) {
 	/* If cloud is found, set all the corners to cloud */
 	if (mask[j] & CF) {
-	  for (i = 0; i < ncorners, i != j; ++i)
+	  for (i = 0; i != j; ++i)
 	    dval[j] = v->cflag;
 	  break;
 	}
