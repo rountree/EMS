@@ -1270,7 +1270,7 @@ static double find_close(datafile_t *df, df_variable_t *v, int r, int *is)
   int i, j, ci, cj;
   double mindist;
   int level;
-  int xlim, ylim;
+  int xlim=0, ylim=0, xlim_initialized=0, ylim_initialized=0;
   int ic=0, jc=0, kc=0;
   double val, nval;
 
@@ -1290,8 +1290,17 @@ static double find_close(datafile_t *df, df_variable_t *v, int r, int *is)
   /* Get the horizontal grid size */
   for (i = 0; i < v->nd; i++) {
     df_variable_t *dv = &df->variables[v->dimids[i]];
-    if (dv->type & VT_LONGITUDE) xlim = df->dimensions[v->dimids[i]].size;
-    if (dv->type & VT_LATITUDE) ylim = df->dimensions[v->dimids[i]].size;
+    if (dv->type & VT_LONGITUDE) {
+	    xlim = df->dimensions[v->dimids[i]].size;
+	    xlim_initialized=1;
+    }
+    if (dv->type & VT_LATITUDE) {
+	    ylim = df->dimensions[v->dimids[i]].size;
+	    ylim_initialized=1;
+    }
+  }
+  if( !xlim_initialized || !ylim_initialized ){
+	  quit("xlim and/or ylim not initialized.\n");
   }
 
   mindist = 1e38;
@@ -1383,7 +1392,7 @@ static double find_close_bathy(datafile_t *df, df_variable_t *v, int r, int *is)
   int i, j, ci, cj;
   double mindist;
   int level;
-  int xlim, ylim;
+  int xlim=0, ylim=0, xlim_initialized=0, ylim_initialized=0;
   int ic=0, jc=0, kc=0;
   double val, nval;
 
@@ -1403,10 +1412,18 @@ static double find_close_bathy(datafile_t *df, df_variable_t *v, int r, int *is)
   /* Get the horizontal grid size */
   for (i = 0; i < v->nd; i++) {
     df_variable_t *dv = &df->variables[v->dimids[i]];
-    if (dv->type & VT_LONGITUDE) xlim = df->dimensions[v->dimids[i]].size;
-    if (dv->type & VT_LATITUDE) ylim = df->dimensions[v->dimids[i]].size;
+    if (dv->type & VT_LONGITUDE){ 
+	    xlim = df->dimensions[v->dimids[i]].size;
+	    xlim_initialized=1;
+    }
+    if (dv->type & VT_LATITUDE){
+	    ylim = df->dimensions[v->dimids[i]].size;
+	    ylim_initialized=1;
+    }
   }
-
+  if( !xlim_initialized || !ylim_initialized ){
+	  quit("xlim and/or ylim not initialized.\n");
+  }
   mindist = 1e38;
   level = 1;
   ci = -1;
