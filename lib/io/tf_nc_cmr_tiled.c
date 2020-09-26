@@ -93,7 +93,6 @@ int tf_nc_cmr_tiled_is_valid(char *fname) {
      fclose(testfp);
    }
 
-   // Line 70
    testfp = fopen( basedir, "r" );
    if( NULL==testfp ){
      warn("Could not resolve '%s', giving up.", basedir);
@@ -102,20 +101,17 @@ int tf_nc_cmr_tiled_is_valid(char *fname) {
      fclose(testfp);
    }
 
-   // Line 74
    if( 0==prm_read_int(ttfp, "NROWS", &nrows )){
      warn("Could not access NROWS.");
      return 0;
    }
 
-   // Line 76
    if( 0==prm_read_int(ttfp, "NCOLS", &ncols )){
      warn("Could not access NCOLS.");
      return 0;
    }
 
    /* Read and check the file list */
-   // Line 79
    for( i=1; i<ncols; ++i ){
      snprintf( keyword, MAXSTRLEN, "COL%i", i);
      if( 0 == prm_read_char( ttfp, keyword, colnames )){
@@ -123,7 +119,6 @@ int tf_nc_cmr_tiled_is_valid(char *fname) {
        return 0;
      }
      numread = parseline(colnames, colvals, nrows);
-     // Line 83
      for(j=0;j<numread;++j){
        char *colval_filename = malloc( strlen(basedir) + strlen(colvals[j]) + 2 );
        if( !colval_filename ){
