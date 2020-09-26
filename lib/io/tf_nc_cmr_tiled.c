@@ -376,7 +376,7 @@ topo_tile_t *tf_nc_cmr_tiled_get_tile(topo_t *tf, int col, int row) {
    /*UR-CHANGED comply with ia64 */
    size_t nlat, nlon;
    size_t start[2], end[2];
-   char *nc_filename=NULL:
+   char *nc_filename=NULL;
 
   tile = (topo_tile_t*)malloc(sizeof(topo_tile_t));
   memset(tile, 0, sizeof(topo_tile_t));
@@ -395,16 +395,14 @@ topo_tile_t *tf_nc_cmr_tiled_get_tile(topo_t *tf, int col, int row) {
    sprintf(keyword, "COL%i", col+1);
    (void)prm_read_char(tf->td->fp, keyword, colnames);
    (void)parseline(colnames, colvals, tf->td->num_file_rows);
-   nc_filename = malloc( strlen( tf->td->basedir ) + strlen( colvals[row] ) + 2;
+   nc_filename = malloc( strlen( tf->td->basedir ) + strlen( colvals[row] ) + 2 );
    snprintf(nc_filename, strlen( tf->td->basedir ) + strlen( colvals[row] ) + 2, "%s/%s", tf->td->basedir, colvals[row]);
    strcpy(tile->td->name, nc_filename);
    if(nc_open(nc_filename, NC_NOWRITE, &ncid) != NC_NOERR){
      quit("tf_nc_cmr_tiled_get_tile: error opening file: \"%s\"\n", tile->td->name);
    }
-
    free(nc_filename);
-   free(tile->td->ncid = ncid;
-
+   tile->td->ncid = ncid;
    nc_inq_dimid(ncid, "lon", &lonDid);
    nc_inq_dimlen(ncid, lonDid, &nlon);
    tile->td->nlons = nlon;
