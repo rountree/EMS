@@ -161,6 +161,7 @@ topo_details_t *tf_nc_cmr_tiled_open(char *fname) {
    FILE *ttfp;
    char keyword[MAXSTRLEN];
    char basedir[MAXSTRLEN];
+   char *valid_basedir=NULL;
    int nrows = 0;
    int ncols = 0;
 
@@ -183,9 +184,13 @@ topo_details_t *tf_nc_cmr_tiled_open(char *fname) {
      sprintf(oldfname  , "%s", fname);
      char *bdir = dirname(fname);
      /* Prepend the basedir of the bathy file */
-     sprintf(basedir, "%s/%s", bdir, oldbasedir);
+     valid_basedir=malloc(strlen(bdir)+strlen(oldbasedir)+2);
+     snprintf(valid_basedir, strlen(bdir)+strlen(oldbasedir)+2, "%s/%s", bdir, oldbasedir);
+   }else{
+     valid_basedir=basedir;
    }
-   strcpy(td->basedir, basedir);
+   strcpy(td->basedir, valid_basedir);
+   free(valid_basedir);
    strcpy(keyword, "NROWS");
    (void)prm_read_int(ttfp, keyword, &nrows);
    td->num_file_rows = nrows;
@@ -299,6 +304,7 @@ topo_extent_t *tf_nc_cmr_tiled_extent(topo_details_t *td) {
    int nrows = 0;
    int ncols = 0;
    int ncid, lonDid, lonVid, latDid, latVid;
+   char *nc_filename=NULL;
 
   te = (topo_extent_t*)malloc(sizeof(topo_extent_t));  
   memset(te, 0, sizeof(topo_extent_t));
@@ -310,8 +316,10 @@ topo_extent_t *tf_nc_cmr_tiled_extent(topo_details_t *td) {
    (void)prm_read_char(td->fp, keyword, colnames);
    (void)parseline(colnames, colvals, nrows);
    /* 1st column 1st row */
-   sprintf(keyword, "%s/%s", basedir, colvals[0]);
-   nc_open(keyword, NC_NOWRITE, &ncid);
+   nc_filename=malloc( strlen(basedir) + strlen(colvals[0]) + 2 );
+   snprintf(nc_filename, strlen(basedir) + strlen(colvals[0]) + 2, "%s/%s", basedir, colvals[0]);
+   nc_open(nc_filename, NC_NOWRITE, &ncid);
+   free(nc_filename);
    nc_inq_varid(ncid, "lon", &lonVid);
    start[0] = 0;
    end[0] = 2;
@@ -325,8 +333,10 @@ topo_extent_t *tf_nc_cmr_tiled_extent(topo_details_t *td) {
    (void)prm_read_char(td->fp, keyword, colnames);
    (void)parseline(colnames, colvals, nrows);
    /* last column last row */
-   sprintf(keyword, "%s/%s", basedir, colvals[nrows-1]);
+   nc_filename=malloc( strlen(basedir) + strlen(colvals[nrows-1]) + 2 );
+   snprintf(keyword, strlen(basedir) + strlen(colvals[nrows-1]) + 2, "%s/%s", basedir, colvals[nrows-1]);
    nc_open(keyword, NC_NOWRITE, &ncid);
+   free(nc_filename);
    nc_inq_dimid(ncid, "lon", &lonDid);
    nc_inq_dimlen(ncid, lonDid, &nlon);
    nc_inq_varid(ncid, "lon", &lonVid);
@@ -366,6 +376,7 @@ topo_tile_t *tf_nc_cmr_tiled_get_tile(topo_t *tf, int col, int row) {
    /*UR-CHANGED comply with ia64 */
    size_t nlat, nlon;
    size_t start[2], end[2];
+   char *nc_filename=NULL:
 
   tile = (topo_tile_t*)malloc(sizeof(topo_tile_t));
   memset(tile, 0, sizeof(topo_tile_t));
@@ -384,13 +395,15 @@ topo_tile_t *tf_nc_cmr_tiled_get_tile(topo_t *tf, int col, int row) {
    sprintf(keyword, "COL%i", col+1);
    (void)prm_read_char(tf->td->fp, keyword, colnames);
    (void)parseline(colnames, colvals, tf->td->num_file_rows);
-   sprintf(keyword, "%s/%s", tf->td->basedir, colvals[row]);
-   strcpy(tile->td->name, keyword);
-  if(nc_open(keyword, NC_NOWRITE, &ncid) != NC_NOERR)
-    quit("tf_nc_cmr_tiled_get_tile: error opening file: \"%s\"\n",
-      tile->td->name);
+   nc_filename = malloc( strlen( tf->td->basedir ) + strlen( colvals[row] ) + 2;
+   snprintf(nc_filename, strlen( tf->td->basedir ) + strlen( colvals[row] ) + 2, "%s/%s", tf->td->basedir, colvals[row]);
+   strcpy(tile->td->name, nc_filename);
+   if(nc_open(nc_filename, NC_NOWRITE, &ncid) != NC_NOERR){
+     quit("tf_nc_cmr_tiled_get_tile: error opening file: \"%s\"\n", tile->td->name);
+   }
 
-  tile->td->ncid = ncid;
+   free(nc_filename);
+   free(tile->td->ncid = ncid;
 
    nc_inq_dimid(ncid, "lon", &lonDid);
    nc_inq_dimlen(ncid, lonDid, &nlon);
