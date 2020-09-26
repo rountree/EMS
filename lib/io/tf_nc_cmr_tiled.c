@@ -32,8 +32,8 @@ int get_lon_index(topo_details_t *td, double lon);
  * check to see if file is a valid tiled nc file
  */
 int tf_nc_cmr_tiled_is_valid(char *fname) {
-   int is_valid = 1;
-   FILE *ttfp;
+   //int is_valid = 0;	/* invalid by default */
+   FILE *ttfp, *testfp;
    char keyword[MAXSTRLEN];
    char vers[MAXSTRLEN];
    char basedir[MAXSTRLEN];
@@ -47,81 +47,119 @@ int tf_nc_cmr_tiled_is_valid(char *fname) {
 
    ttfp = fopen(fname, "r");
 
-   if(ttfp != NULL) {
-     /* OK the file is there */
-     if(prm_read_char(ttfp, "VERSION", vers)) {
-       /* VERSION keyword is there */
-       if(strcmp("nctiled", vers) == 0) {
-	 /* it is the proper version */
-	 if(prm_read_char(ttfp, "BASEDIR", basedir)) {
-	   /* got the base dir */
-	   /* Now validate the base dir */
-	   if (fopen(basedir, "r") == NULL) {
-	     char oldbasedir[MAXSTRLEN];
-	     char oldfname[MAXSTRLEN];
-	     sprintf(oldbasedir, "%s", basedir);
-	     sprintf(oldfname,   "%s", fname);
-	     char *bdir = dirname(oldfname);
-	     /* Prepend the basedir of the bathy file */
-	     sprintf(basedir, "%s/%s", bdir, oldbasedir);
-	     warn("Could not resolve '%s', now trying '%s'", 
-		  oldbasedir, basedir);
-	   }
-	   /* Now validate again */
-	   if (fopen(basedir, "r") == NULL) {
-	     is_valid = 0;
-	     warn("Could not resolve '%s'", basedir);
-	   } else {
-	     if(prm_read_int(ttfp, "NROWS", &nrows)) {
-	       /* got the number of rows */
-	       if(prm_read_int(ttfp, "NCOLS", &ncols)) {
-		 /* got the number of cols, now read and check the 
-		    file list  */
-		 for(i=1;i<=ncols;++i) {
-		   sprintf(keyword, "COL%i", i);
-		   if(prm_read_char(ttfp, keyword, colnames)) {
-		     numread = parseline(colnames, colvals, nrows);
-		     for(j=0;j<numread;++j) {
-		       sprintf(keyword, "%s/%s", basedir, colvals[j]);
-		       /* check to see if the file exists */
-		       if(nc_open(keyword, NC_NOWRITE, &ncid) 
-			  == NC_NOERR) {
-			 /* check to see if it contain latitude, 
-			    longitude, and height */
-			 if((nc_inq_varid(ncid, "lat", &latVid) 
-			     == NC_NOERR)
-			    && (nc_inq_varid(ncid, "lon", &lonVid) 
-				== NC_NOERR)
-			    && ((nc_inq_varid(ncid, 
-					      "height", &htVid) 
-				 == NC_NOERR)
-				|| (nc_inq_varid(ncid,
-						 "depth", &htVid)
-				    == NC_NOERR))) {
-			   /* file is a valid CMR nc_topo file */
-			   nc_close(ncid);
-			 } else {
-			   warn("Bathy tiles: Can't find required attributes in netCDF file %s\n", keyword);
-			   is_valid = 0;
-			 } /* end if lat, lon, and height */
-		       } else {
-			 is_valid = 0;
-			 warn("Bathy tiles: Can't open netCDF file %s\n", keyword);
-		       }
-		     }
-		   }
-		 }
-	       }
-	     }
-	   }
-	 }
-       }
+   if(ttfp == NULL){ 
+     // FIXME Add errno reporting.
+     warn("File '%s' does not exist.", fname);
+     return 0;
+   }
+   if(0 == prm_read_char(ttfp, "VERSION", vers)){
+     // VERSION keyword missing
+     warn("File '%s' does not contain a VERSION keyword.", fname);
+     return 0;
+   }
+   if(0 != strcmp("nctiled", vers)){
+     // Wrong version
+     warn("File '%s' version is not 'nctiled'.", fname);
+     return 0;
+   }
+   if(0 == prm_read_char(ttfp, "BASEDIR", basedir)){
+     // Getting BASEDIR failed
+     warn("File '%s' does not have a BASEDIR keyword.", fname);
+     return 0;
+   }
+
+   testfp = fopen(basedir, "r");
+   if( NULL == testfp ){
+     warn("Could not resolve '%s', trying a different BASEDIR.", basedir);
+     char *oldbasedir = malloc( strlen(basedir)+1 );
+     char *oldfname = malloc( strlen(fname)+1 );
+     if( !oldbasedir || !oldfname ){
+	     warn("malloc() failed.  Out of memroy.");
+	     free(oldbasedir);
+	     free(oldfname);
+	     return 0;
      }
-     fclose(ttfp);
-   } /* end if ttfp != NULL */
-   
-   return(is_valid);
-} /* end tf_nc_cmr_tiled_isvalid */
+     snprintf(oldbasedir, strlen(basedir)+1, "%s", basedir);
+     snprintf(oldfname, strlen(fname)+1, "%s", fname);
+     char *bdir = dirname(oldfname);
+     if( strlen(bdir) + strlen(oldbasedir) + 2 > MAXSTRLEN ){
+       warn("%s/%s is longer than MAXSTRLEN=%d.\n", bdir, oldbasedir, MAXSTRLEN);
+       return 0;
+     }
+     snprintf( basedir, strlen(bdir)+strlen(oldbasedir)+2, "%s/%s", bdir, oldbasedir );
+     free(oldbasedir);
+     free(oldfname);
+   }else{
+     fclose(testfp);
+   }
+
+   // Line 70
+   testfp = fopen( basedir, "r" );
+   if( NULL==testfp ){
+     warn("Could not resolve '%s', giving up.", basedir);
+     return 0;
+   }else{
+     fclose(testfp);
+   }
+
+   // Line 74
+   if( 0==prm_read_int(ttfp, "NROWS", &nrows )){
+     warn("Could not access NROWS.");
+     return 0;
+   }
+
+   // Line 76
+   if( 0==prm_read_int(ttfp, "NCOLS", &ncols )){
+     warn("Could not access NCOLS.");
+     return 0;
+   }
+
+   /* Read and check the file list */
+   // Line 79
+   for( i=1; i<ncols; ++i ){
+     snprintf( keyword, MAXSTRLEN, "COL%i", i);
+     if( 0 == prm_read_char( ttfp, keyword, colnames )){
+       warn("Unable to find keyword '%s'", keyword);
+       return 0;
+     }
+     numread = parseline(colnames, colvals, nrows);
+     // Line 83
+     for(j=0;j<numread;++j){
+       char *colval_filename = malloc( strlen(basedir) + strlen(colvals[j]) + 2 );
+       if( !colval_filename ){
+	       warn("Malloc failed, out of memory.");
+	       return 0;
+       }
+       snprintf(colval_filename, strlen(basedir)+strlen(colvals[j])+2, "%s/%s", basedir, colvals[j]);
+       if( NC_NOERR != nc_open(keyword, NC_NOWRITE, &ncid) ){
+         warn("Failure opening '%s'.", colval_filename);
+         free( colval_filename );
+         return 0;
+       }
+
+       if( NC_NOERR != nc_inq_varid( ncid, "lat", &latVid ) ){
+	 warn("'lat' test failed for %s.", colval_filename);
+	 free( colval_filename );
+	 return 0;
+       }
+
+       if( NC_NOERR != nc_inq_varid( ncid, "lon", &lonVid) ){
+	 warn("'lon' test failed for %s.", colval_filename);
+	 free( colval_filename );
+	 return 0;
+       }
+
+       if( ( NC_NOERR != nc_inq_varid( ncid, "height", &htVid ) )
+       &&  ( NC_NOERR != nc_inq_varid( ncid, "depth", &htVid ) ) ){
+	 warn("'height'/'depth' test failed for %s.", colval_filename);
+	 free( colval_filename);
+	 return 0;
+       }
+       free( colval_filename);
+     } // for j 
+   } // for i
+   return 1;
+}
 
 topo_details_t *tf_nc_cmr_tiled_open(char *fname) {
    topo_details_t *td;
