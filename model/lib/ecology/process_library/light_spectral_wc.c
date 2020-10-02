@@ -686,10 +686,10 @@ void light_spectral_wc_postinit(eprocess* p)
     
     eco_write_setup(e,"\nGuassian curve determined absorption coefficients in water column \n");
     
-    double *yC_chl;
-    double *yC_xanth;
-    double *yC_chl_rsr;
-    double *yC_xanth_rsr;
+    double *yC_chl=NULL;
+    double *yC_xanth=NULL;
+    double *yC_chl_rsr=NULL;
+    double *yC_xanth_rsr=NULL;
     
     yC_chl = d_alloc_1d(num_waves);
     yC_xanth = d_alloc_1d(num_waves); 
@@ -1770,7 +1770,7 @@ void light_spectral_wc_postcalc(eprocess* p, void* pp)
     double* w_bot  = col->cv[ws->w_bot_i];
     double* u_surf = col->cv[ws->u_surf_i];
     
-    double top,Kd_r,cellnum_l,cellnum_s,cellnum_PhyD,cellnum_Tricho,cellnum_MPB;
+    double top,Kd_r,cellnum_l=0.0,cellnum_s=0.0,cellnum_PhyD=0.0,cellnum_Tricho=0.0,cellnum_MPB=0.0;
     
     double DOC = 0.0;
     double EFI = 0.0;

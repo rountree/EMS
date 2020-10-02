@@ -549,8 +549,8 @@ void eta_local(geometry_t *window,   /* Window geometry              */
 	       )
 {
   int c, c1, c2, cc;            /* Sparse coodinate / counter        */
-  double colflux;               /* Velocity transport divergence     */
-  double flux, fluxi;           /* Flux in normal direction          */
+  double colflux=0.0;           /* Velocity transport divergence     */
+  double flux=0.0, fluxi=0.0;   /* Flux in normal direction          */
   double sgn;
 
   sgn = (open->ocodex & R_EDGE || open->ocodey & F_EDGE) ? -1.0 : 1.0;
@@ -676,7 +676,7 @@ double calc_flux_adjust(geometry_t *window,
 			double eta, 
 			int c, int ci)
 {
-  double ts;
+  double ts=0.0;
   fa_info_t *fas = open->fas;
   int flag = 0;
 

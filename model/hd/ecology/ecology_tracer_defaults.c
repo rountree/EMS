@@ -61,47 +61,47 @@ void eco_defaults_std(tracer_info_t *tracer, char *trname, ecology *e)
   double Mic_Chl = Mic_N/7.0; 
   double Mic_I = Mic_NR/14.0*1060.0/16.0;
   
-  double SG_N;
-  double SGROOT_N;
-  double SGH_N;
-  double SGHROOT_N;
-  double SGP_N;
-  double SGPROOT_N;
-  double SGD_N;
-  double SGDROOT_N;
-  double MA_N;
-  double CH_N;
-  double CS_N;
-  double CS_Chl;
-  double Mic_N_sed;
-  double Mic_NR_sed;
-  double Mic_PR_sed;
-  double Mic_Chl_sed; 
-  double Mic_I_sed;
-  double Tricho_N;
-  double Tricho_NR;
-  double Tricho_PR;
-  double Tricho_Chl; 
-  double Tricho_I;
-  double ZL_N;
-  double ZS_N;
+  double SG_N=0.0;
+  double SGROOT_N=0.0;
+  double SGH_N=0.0;
+  double SGHROOT_N=0.0;
+  double SGP_N=0.0;
+  double SGPROOT_N=0.0;
+  double SGD_N=0.0;
+  double SGDROOT_N=0.0;
+  double MA_N=0.0;
+  double CH_N=0.0;
+  double CS_N=0.0;
+  double CS_Chl=0.0;
+  double Mic_N_sed=0.0;
+  double Mic_NR_sed=0.0;
+  double Mic_PR_sed=0.0;
+  double Mic_Chl_sed=0.0; 
+  double Mic_I_sed=0.0;
+  double Tricho_N=0.0;
+  double Tricho_NR=0.0;
+  double Tricho_PR=0.0;
+  double Tricho_Chl=0.0; 
+  double Tricho_I=0.0;
+  double ZL_N=0.0;
+  double ZS_N=0.0;
 
-  double DetR_C_sed;
-  double DetR_N_sed;
-  double DetR_P_sed;
+  double DetR_C_sed=0.0;
+  double DetR_N_sed=0.0;
+  double DetR_P_sed=0.0;
 
-  double DOR_C_sed;
-  double DOR_N_sed;
-  double DOR_P_sed;
+  double DOR_C_sed=0.0;
+  double DOR_N_sed=0.0;
+  double DOR_P_sed=0.0;
 
-  double DetPL_N_sed;
-  double DetBL_N_sed;
+  double DetPL_N_sed=0.0;
+  double DetBL_N_sed=0.0;
 
-  double cover;
-  double grow;
-  double CSm;
-  double CSrad;
-  double CHpolypden;
+  double cover=0.0;
+  double grow=0.0;
+  double CSm=0.0;
+  double CSrad=0.0;
+  double CHpolypden=0.0;
   
 /* Initial conditions that depend on the parameters chosen */
 

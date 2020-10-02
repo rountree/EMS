@@ -126,8 +126,8 @@ int coastmesh(coamsh_t *cm, int mode)
   int n, m, i, j, nl, nlm, sm;
   int n1, n2, ii, i1, i2, mi;
   int msl;           /* Length of the major segment                    */
-  int sid, eid, mid; /* Start, end and mid index for the major segment */
-  int obcf;          /* =0; sid closest to OBC start, =1; eid closest  */
+  int sid=0, eid, mid=0; /* Start, end and mid index for the major segment */
+  int obcf=0;        /* =0; sid closest to OBC start, =1; eid closest  */
   int obci;          /* Start segment for minor segments               */
   int obcs;          /* End index for major edges                      */
   int obcm;          /* Maximum obc size                               */
@@ -151,7 +151,7 @@ int coastmesh(coamsh_t *cm, int mode)
   int filef = 0;
   int cutoff;
   int dir;
-  int sseg, ssid, ssize, sdir, sn, en, mn;
+  int sseg, ssid, ssize, sdir, sn=0, en=0, mn=0;
   msh_t *msh = NULL;
   jig_t *jig = NULL;
   int psize = 5;
@@ -2068,7 +2068,7 @@ void auto_link(coamsh_t *cm,    /* Coastmesh structure                 */
       double jlon, jlat;
       double dmin = HUGE;
       double dmax = 0;
-      int jmin, jmax;
+      int jmin, jmax=0;
       int found = 0;
       int inn = 0;
 	

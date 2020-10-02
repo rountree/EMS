@@ -2822,10 +2822,10 @@ void trans_sourcegrid_init(parameters_t *params,
 			   win_priv_t **wincon,
 			   dump_data_t *dumpdata)
 {
-  geometry_t *tpg;
-  window_t *tpd;
-  win_priv_t *tpc;
-  transport_t *tp;
+  geometry_t *tpg=NULL;
+  window_t *tpd=NULL;
+  win_priv_t *tpc=NULL;
+  transport_t *tp=NULL;
   char keyword[MAXSTRLEN];
   char buf[MAXSTRLEN];
   int c, i, j, k, m, n, cb, ci, cc;
@@ -2837,20 +2837,20 @@ void trans_sourcegrid_init(parameters_t *params,
   size_t nz, kz;
   size_t nce1, nce2;
   size_t nfe1, nfe2;
-  double **bathy;
-  double *layers;
-  double *cellz;
-  double **d1, **d2;
-  double **u1x, **u1y;
-  double **u2x, **u2y;
-  double **cellx, **celly;
-  double **gridx, **gridy;
-  double **sx, **sy;
+  double **bathy=NULL;
+  double *layers=NULL;
+  double *cellz=NULL;
+  double **d1=NULL, **d2=NULL;
+  double **u1x=NULL, **u1y=NULL;
+  double **u2x=NULL, **u2y=NULL;
+  double **cellx=NULL, **celly=NULL;
+  double **gridx=NULL, **gridy=NULL;
+  double **sx=NULL, **sy=NULL;
   int nobc;       /* No. boundaries in source grid */
-  int *npts;      /* No. cells in each boundary */
-  int **iloc;     /* Boundary x location list   */
-  int **jloc;     /* Boundary y location list   */
-  int *type;      /* Boundary orientation       */
+  int *npts=NULL;      /* No. cells in each boundary */
+  int **iloc=NULL;     /* Boundary x location list   */
+  int **jloc=NULL;     /* Boundary y location list   */
+  int *type=NULL;      /* Boundary orientation       */
 
   
   int xm1, xp1, yp1, ym1;
@@ -3692,8 +3692,8 @@ int get_st_map(master_t *master, geometry_t *wt, geometry_t *ws, double **sx, do
 	       double **gridx, double **gridy, int *s2t, double *xoset, double *yoset)
 {
 
-  double **tx, **ty;
-  xytoij_tree_t *t_xyij_tree;
+  double **tx=NULL, **ty=NULL;
+  xytoij_tree_t *t_xyij_tree=NULL;
   int nce1, nce2, nfe1, nfe2;
   int i, j, k, c, cc, ii, jj, cs, ct, c2, clast;
   double w1;
@@ -4006,7 +4006,7 @@ int get_st_map(master_t *master, geometry_t *wt, geometry_t *ws, double **sx, do
     ct = s2t[ci];
 
     if (ct != 0 && s2t[cg] == 0) {
-      int *igm, *gim;
+      int *igm=NULL, *gim=NULL;
       int c1, c2, c3, c4;
       /* Get the direction the ghost is approached from                  */
       if (cg == ws->xm1[ci]) { igm = wt->xm1; gim = wt->xp1; }
@@ -4101,7 +4101,7 @@ int check_quad(geometry_t *wt,             /* Target geometry        */
 {
   double xo, xe, xn, xne;
   double yo, ye, yn, yne;
-  int c, ir, jr;
+  int c, ir=0, jr=0;
   int io, ie, in, ine;
   int jo, je, jn, jne;
 
@@ -4437,7 +4437,7 @@ void set_tp(geometry_t *geom, master_t *master, geometry_t **window)
 /*-------------------------------------------------------------------*/
 int find_nearest(geometry_t *geom, double x, double y)
 {
-  int c, cc, cs;
+  int c, cc, cs=0;
   double dx, dy, dist, mindist = HUGE;
 
   for (cc = 1; cc < geom->b2_t; cc++) {

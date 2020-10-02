@@ -147,7 +147,7 @@ void closure_k_e_implicit(geometry_t *window, /* Processing window */
   double stke;
   double sdiss;
   double sqrttke;
-  double v1, v2, wflux, wave_induced, diss0, b1;
+  double v1, v2, wflux, wave_induced, diss0=0.0, b1;
 
   /*-----------------------------------------------------------------*/
   /* Note: the 3D work arrays wincon->w# could be used for the */

@@ -182,6 +182,7 @@ int webf_init(sched_event_t *event)
 		data->ts[t]->name);
 
       if (master->waves & SPECTRAL) {
+#warning "Uninitialized nsfr reported here:  https://github.com/csiro-coasts/EMS/issues/12"
 	size_t nsfr;
 	size_t start[4];
 	size_t count[4];

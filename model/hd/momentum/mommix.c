@@ -1573,11 +1573,11 @@ void scale_hdiff(geometry_t *window,      /* Window geometry         */
 {
 
   win_priv_t *wincon = window->wincon;  /* Window constants          */
-  double *h1, hm;                       /* Cell size                 */
+  double *h1=NULL, hm=0.0;              /* Cell size                 */
   int cc, c, c2;                        /* Counters, cell locations  */
-  int nv;                               /* Stencil size              */
-  int *vec;                             /* Cells to process          */
-  double AH0;                           /* Constant mixing           */
+  int nv=0;                             /* Stencil size              */
+  int *vec=NULL;                        /* Cells to process          */
+  double AH0=0;                         /* Constant mixing           */
   int scalef;                           /* Constant mixing scaling   */
 
   if (smag == 1.0 && wincon->smagorinsky != 0.0) return;
@@ -1630,10 +1630,10 @@ void scale_hdiff_m(master_t *master,   /* Master data                */
 		   )
 {
   geometry_t *geom = master->geom;
-  double *h1, hm;                       /* Cell size                 */
+  double *h1=NULL, hm=0.0;              /* Cell size                 */
   int cc, c, c2;                        /* Counters, cell locations  */
-  int nv;                               /* Stencil size              */
-  int *vec;                             /* Cells to process          */
+  int nv=0;                             /* Stencil size              */
+  int *vec=NULL;                        /* Cells to process          */
   int scalef;                           /* Constant mixing scaling   */
 
   /* Smagorinsky only                                                */

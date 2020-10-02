@@ -979,8 +979,8 @@ void bdry_eval_tr_m(geometry_t *geom, /* Global geometry */
                     master_t *master  /* Global data */
   )
 {
-  int n, m, tn, tm;             /* Counters */
-  int c, cc, c2, *obce;         /* Sparse coordinates / counters */
+  int n, m, tn, tm=0;             /* Counters */
+  int c, cc, c2, *obce=NULL;    /* Sparse coordinates / counters */
   double x, y, z;               /* Geographic coordinates */
   open_bdrys_t **open = geom->open;
 
@@ -1086,8 +1086,8 @@ void bdry_eval_tr_w(geometry_t *geom,    /* Global geometry */
                     master_t   *master,  /* Global data */
 		    geometry_t *window)  /* Window geometry */
 {
-  int n, m, tn, tm;             /* Counters */
-  int c, cc, c2, *obce, cc_m;   /* Sparse coordinates / counters */
+  int n, m, tn, tm=0;             /* Counters */
+  int c, cc, c2, *obce=NULL, cc_m;   /* Sparse coordinates / counters */
   double x, y, z;               /* Geographic coordinates */
   open_bdrys_t **open_m = geom->open;
   open_bdrys_t **open_w = window->open;
@@ -1913,13 +1913,13 @@ void OBC_bgz_nogradb(geometry_t *window, open_bdrys_t *open, double *tr)
 void read_bdry_zone(master_t *master, open_bdrys_t *open, int cc, int mode)
 {
   geometry_t *geom = master->geom;
-  bdry_details_t *data;
-  double *tvec, x, y, z;
+  bdry_details_t *data=NULL;
+  double *tvec=NULL, x, y, z;
   double ramp = (master->rampf & FILEIN) ? master->rampval : 1.0;
-  int *obc;
-  int tinc;
+  int *obc=NULL;
+  int tinc=0;
   int c, c2, i;
-  int zone;
+  int zone=0;
 
   if (mode & U1BDRY && mode & U1GEN) {
     data = &open->datau1;
@@ -1978,7 +1978,7 @@ double adjust_OBC_mass(geometry_t *window,
   int c, cc, ci, c2, tm, vc, *obc;
   double *vel, *dz, *hat;
   double d1, sgn = 1.0;
-  double volin, volout, massin, massout, val;
+  double volin, volout, massin, massout, val=0.0;
   double tmax = 0.0;
 
   if (open->bcond_tra[tn] & CUSTOM) {

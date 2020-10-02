@@ -9464,6 +9464,7 @@ void check_TS_relax(parameters_t *params, FILE *fp)
   char keyword[MAXSTRLEN];
   char buf[MAXSTRLEN];
   char name[MAXSTRLEN];
+#warning "fields use before initialization reported here:  https://github.com/csiro-coasts/EMS/issues/14"
   char *fields[MAXSTRLEN * MAXNUMARGS];
   int n, ntr;
 

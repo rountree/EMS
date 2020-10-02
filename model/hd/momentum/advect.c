@@ -6496,9 +6496,9 @@ void set_dzzv(geometry_t *window, double *dzz, int *cells, int vc, int vcs, int 
   window_t *windat = window->windat;
   win_priv_t *wincon = window->wincon;
   int c, cc, c2, zm1, nn;
-  int *bot, *dry, ndry;
-  int sc, ec, *aux;
-  double *dz;
+  int *bot=NULL, *dry=NULL, ndry=0;
+  int sc=0, ec=0, *aux=NULL;
+  double *dz=NULL;
 
   /* Set pointers */
   if (mode & U13D) {
@@ -6601,7 +6601,7 @@ void vel_face(geometry_t *window, /* Processing window */
 {
   int cc, c, n, ncells;
   double w, wtop;
-  int *m1, *obc, nobc;
+  int *m1=NULL, *obc=NULL, nobc=NULL;
 
   if (mode & (U13D|U12D)) {
     m1 = window->xm1;

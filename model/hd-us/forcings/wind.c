@@ -405,6 +405,7 @@ double windstress_kondo(master_t *master, wind_data_t *data,
 
   double qs = NOTVALID;  /* Specific humidity at surface (kg/kg)     */
   double q = NOTVALID;   /* Specific humidity at 10m (kg/kg)         */
+#warning "es not initialized report here: https://github.com/csiro-coasts/EMS/issues/13"
   double es;       /* Vapour pressure at the air temp (HPa)          */
 
   double ew;       /* Vapour pressure at water temp. (Hpa)           */

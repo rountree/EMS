@@ -1273,8 +1273,8 @@ static double find_close(datafile_t *df, df_variable_t *v, int r, int *is)
   int i, j, ci, cj;
   double mindist;
   int level;
-  int xlim, ylim;
-  int ic, jc, kc;
+  int xlim=0, ylim=0;
+  int ic=0, jc=0, kc=0;
   double val, nval;
 
   /* Get the indexes */
@@ -1386,8 +1386,8 @@ static double find_close_bathy(datafile_t *df, df_variable_t *v, int r, int *is)
   int i, j, ci, cj;
   double mindist;
   int level;
-  int xlim, ylim;
-  int ic, jc, kc;
+  int xlim=0, ylim=0;
+  int ic=0, jc=0, kc=0;
   double val, nval;
 
   /* Get the indexes */

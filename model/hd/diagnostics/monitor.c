@@ -2138,7 +2138,7 @@ void shapiro(geometry_t *window,     /* Window geometry              */
 {
   int c, cc;
   int cp, cm, n;
-  int *p1, *m1;
+  int *p1=NULL, *m1=NULL;
   double sgn;
 
   order -= 1;
@@ -4078,7 +4078,7 @@ void reset_means3d_m(master_t *master, int trm)
 {
   geometry_t *geom = master->geom;
   dump_data_t *dumpdata = master->dumpdata;
-  double t;
+  double t=0.0;
   int cc, trd;
   int season, mon, sf;
   char *vname;
@@ -4216,7 +4216,7 @@ void reset_means2d_m(master_t *master, int trm)
 {
   geometry_t *geom = master->geom;
   dump_data_t *dumpdata = master->dumpdata;
-  double t;
+  double t=0.0;
   int cc, trd;
   int season, mon, sf;
   char *vname;
@@ -4887,42 +4887,42 @@ void calc_perc(FILE *fp)
   char outfile[MAXSTRLEN];
   char vlist[MAXSTRLEN];
   char buf[MAXSTRLEN];
-  cstring *filenames;
-  timeseries_t **tsfiles;
-  datafile_t *df;
+  cstring *filenames=NULL;
+  timeseries_t **tsfiles=NULL;
+  datafile_t *df=NULL;
   size_t ndumps = 0;
   size_t start[4];
   size_t count[4];
   char **vars = NULL;
   int ntsfiles;
   int nvars = 0;
-  int outfid;
+  int outfid=0;
   int i, j, k, kk, c, v, n, m, mm;
   int vids[Ns];
   int ndims;
-  int *sdump;
-  int *edump;
+  int *sdump=NULL;
+  int *edump=NULL;
   int sparse, spf;
   int first = 1;
   int mnc = 0;
-  int *mncid;
+  int *mncid=NULL;
   int r1;
   int dsize = 0, asize;
   int vid;
   int ad;
-  int inc;
-  int *s2i, *s2j, *s2k, ***map;
-  double *data, results[Ns];
+  int inc=0;
+  int *s2i=NULL, *s2j=NULL, *s2k=NULL, ***map=NULL;
+  double *data=NULL, results[Ns];
   double stime, etime;
   double rfrac;
-  double **botz, *bots;
-  double d1, d2, dtf, dt = 0.0;
+  double **botz=NULL, *bots=NULL;
+  double d1=0.0, d2=0.0, dtf=0.0, dt = 0.0;
   double mean, nm;
   double nn, ntot, clck, mclck;
   double elapsed = 0.0, start_time;
   long t;
   struct timeval tm1;
-  int *layers, nl;
+  int *layers=NULL, nl;
 
   params = params_alloc();
   master = master_alloc();

@@ -3271,7 +3271,7 @@ void asselin(geometry_t *window,  /* Processing window */
 
     if (open->bcond_nor2d & (VERTIN|FILEIN|CUSTOM|TIDALC)) {
       int xp1, yp1, ci;
-      double f1, fp1, f2, fp2, nvel, v1, v2;
+      double f1, fp1, f2, fp2, nvel, v1=0.0, v2=0.0;
       double rts, eta, tide, sgn;
       double rtsh = 1.2;
 

@@ -1230,13 +1230,13 @@ void bf_eqn_free(master_t *master, bdry_details_t *data)
 void read_bdry_zone_std(master_t *master, open_bdrys_t *open, int cc, int mode)
 {
   geometry_t *geom = master->geom;
-  bdry_details_t *data;
+  bdry_details_t *data=NULL;
   tsfiles_t *tsf;
-  double *tvec, thetau1, u, v;
-  int *obc;
-  int tinc;
+  double *tvec=NULL, thetau1, u, v;
+  int *obc=NULL;
+  int tinc=0;
   int c, cs, i;
-  int zone;
+  int zone=0;
 
   if (mode & U1BDRY && mode & U1GEN) {
     data = &open->datau1;

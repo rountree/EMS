@@ -38,7 +38,7 @@ static void dtime_ounits(char *output_tunit, char *model_tunit,
   double d1 = 0.0, dc = 0.0;
   char timeunit[MAXSTRLEN];
   char ounit[MAXSTRLEN];
-  char *tok, *tzone, *saveptr;
+  char *tok=NULL, *tzone=NULL, *saveptr=NULL;
   double ntime = time;
 
   /* Find the time zone from the output units string, and put in tzone */

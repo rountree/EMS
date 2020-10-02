@@ -1209,7 +1209,7 @@ double get_vapour_press(window_t   *windat,
 			double *rh          /* Relative humidity     */
 			)
 {
-  double dtw;   /* Wet bulb temperature                              */
+  double dtw=-999.999;   /* Wet bulb temperature                              */
 
   /* Get the vapour pressures. Options are:                          */
   /* 1. Wet bulb supplied directly from file                         */
@@ -2571,7 +2571,7 @@ double swr_from_mean(double swr, double lat, double t)
   double at = 20.0;     /* Default air temperature                     */
   double cld = 0.0;     /* Default cloud amount                        */
   double inc = 600.0;   /* Precision (s)                               */
-  double dawn, dusk;    /* Times of dawn and dusk to nearest inc       */
+  double dawn=-1.0, dusk=-1.0;    /* Times of dawn and dusk to nearest inc       */
   double st;            /* Start of current day                        */
   int yr;               /* Year                                        */
   double day;           /* Julian day                                  */

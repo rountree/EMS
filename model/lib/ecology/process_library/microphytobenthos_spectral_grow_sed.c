@@ -243,8 +243,8 @@ void microphytobenthos_spectral_grow_sed_calc(eprocess* p, void* pp)
     /* LIGHT ABSORPTION */
 
 
-    double KI;            // mol photon cell-1 s-1
-    double Chlsynfactor;  // d aA / d Chl 
+    double KI=0.0;            // mol photon cell-1 s-1
+    double Chlsynfactor=0.0;  // d aA / d Chl 
 
     if (ws->KI_MPB_i > -1){
       KI = c->cv[ws->KI_MPB_i];

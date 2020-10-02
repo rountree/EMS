@@ -38,7 +38,7 @@ void write_run_setup(hd_data_t *hd_data)
   master_t *master = hd_data->master;
   geometry_t *geom = hd_data->geom;
   parameters_t *params = hd_data->params;
-  int n, nn, ntr;
+  int n, nn, ntr=0;
   int c, cc;
   long t;
   double d1, d2, d3, d4;

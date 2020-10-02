@@ -105,7 +105,7 @@ void custom_tide_init(master_t *master,
   int *mask;
   char buf[MAXSTRLEN], name[5];
   int have_tide_files = 0;
-  timeseries_t *tsa, *tsp;
+  timeseries_t *tsa=NULL, *tsp=NULL;
   int tsp_id, tsa_id;
   int y1;
   double stime = master->t;

@@ -2499,7 +2499,7 @@ double **set_bathy(parameters_t *params,  /* Input parameter data
 
   /* Set uniform bathymetry over a zoomed cells if required */
   if(params->dozoom) {
-    int ii, jj;
+    int ii=0, jj=0;
     double d1, d2;
     int **mask;
 
@@ -2643,7 +2643,7 @@ void set_z_bathy(int i, int j, int zmfe1, int zmfe2, double **bathy, double val)
 double smooth_bathy(unsigned long ***flag, int nz, int i, int j, int **xm, int **xp, 
 		    int **ym, int **yp, double **bathy, double bmin, double bmax)
 {
-  double nbthy, kk[4][4];
+  double nbthy=0.0, kk[4][4];
   int im, ip, jm, jp;
 
   /* Set the filter weights */

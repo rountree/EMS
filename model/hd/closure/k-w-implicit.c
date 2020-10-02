@@ -173,7 +173,7 @@ void closure_k_w_implicit(geometry_t *window, /* Processing window */
   double du1, du2;
   double omin;
   double min_omega;
-  double wflux, diss0;
+  double wflux, diss0=0.0;
   double wave_induced, b1;
 
   /*-----------------------------------------------------------------*/

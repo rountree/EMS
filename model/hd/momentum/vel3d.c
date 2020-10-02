@@ -5615,11 +5615,11 @@ void blend_vel(geometry_t *window,
 	       double *vel)
 {
   int n, bn = 0, c, cc;
-  int nb;
-  int *p1, *m1, *index, i, i1, i2, c1, c2;
+  int nb=0;
+  int *p1=NULL, *m1=NULL, *index=NULL, i, i1, i2, c1, c2;
   double frac, v1, v2;
   double *dx, *dy;
-  blend_t *blend;
+  blend_t *blend=NULL;
 
   if (mode & (U12D|U13D|U1_VH|BLM1|BLR1))
     bn = wincon->nbl1;

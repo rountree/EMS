@@ -1894,8 +1894,8 @@ size_t extract_grow_from_defaults(int n, char* name,
   size_t rate_len = KAY1;
   int ptable_len = (int) pow(rate_len, n) + 1;
   int prate_len  = rate_len * n + 1;
-  double *grow;
-  double *rates;
+  double *grow=NULL;
+  double *rates=NULL;
   
   // Sanity check
   if (n != NUTRIENTS)
