@@ -7488,7 +7488,7 @@ void semi_lagrange_u1av(geometry_t *window,  /* Processing window    */
   double u, v, he1, he2;
   double p, q, pp, qq;
   int *cells, vcs;
-  int cc, c, ci, c2;
+  int cc, c, ci, c2=0;
   int *cl = wincon->s5;        /* Streamline origin */
   int *c2cc = wincon->i7;      /* c to cc map */
   int n;
@@ -7673,7 +7673,7 @@ void semi_lagrange_u2av(geometry_t *window,  /* Processing window    */
   double u, v, he1, he2;
   double p, q, pp, qq;
   int *cells, vcs;
-  int cc, c, ci, c2;
+  int cc, c, ci, c2=0;
   int *cl = wincon->s5;        /* Streamline origin */
   int *c2cc = wincon->i7;      /* c to cc map */
   int n;
