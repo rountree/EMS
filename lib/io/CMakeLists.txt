@@ -1,0 +1,20 @@
+target_sources( libemslib
+	PRIVATE
+	coast.c
+	datafile.c
+	dfcoords.c
+	dfeval.c
+	emslogger.c
+	ncw.c
+	poly_coast.c
+	prmfile.c
+	ptrack.c
+	tf_nc_cmr.c
+	tf_nc_cmr_tiled.c
+	tf_xyz_cmr.c
+	tiled_coast.c
+	timeseries.c
+	topo.c
+	topo_factory.c
+	topo_tile_misc.c
+)
