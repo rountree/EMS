@@ -3,7 +3,8 @@
 # Barry Rountree
 # rountree@llnl.gov
 
-cmake_minimum_required(VERSION 3.14.0 FATAL_ERROR)
+#
+cmake_minimum_required(VERSION 3.18.4 FATAL_ERROR)
 
 set(CMP0048=NEW) # Allow version information in the project stanza
 project(EMS
@@ -13,5 +14,5 @@ project(EMS
 	LANGUAGES C CXX)
 
 add_subdirectory(./lib)
-
-
+add_subdirectory(./model/hd)	# shoc
+add_subdirectory(./model/lib)	# compas

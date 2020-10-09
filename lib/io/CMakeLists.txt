@@ -5,6 +5,7 @@ target_sources( libemslib
 	dfcoords.c
 	dfeval.c
 	emslogger.c
+	nc_buffered.cpp
 	ncw.c
 	poly_coast.c
 	prmfile.c
@@ -17,4 +18,11 @@ target_sources( libemslib
 	topo.c
 	topo_factory.c
 	topo_tile_misc.c
+	ts_serial.cpp
+)
+
+set_property(
+	SOURCE nc_buffered.cpp
+	TARGET_DIRECTORY libemslib
+	PROPERTY COMPILE_DEFINITIONS _GLIBCXX_GTHREAD_USE_WEAK=0
 )

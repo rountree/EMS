@@ -1,0 +1,10 @@
+target_sources(shoc
+	PRIVATE
+	choosedump.c
+	opendump.c
+	readdump.c
+	readparam.c
+	readparam_r.c
+	readparam_t.c
+	sourcesink.c
+)

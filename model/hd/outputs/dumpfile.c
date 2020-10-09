@@ -4487,14 +4487,14 @@ static double get_var_value_2d(dump_file_t *df, df_parray_var_t *var,
 
 static double get_missing(df_parray_var_t *var);
 
-INLINE void set_data(df_parray_var_t *var, void **data)
+static void set_data(df_parray_var_t *var, void **data)
 {
   var->vector_mode = VM_NONE;
   var->data[0] = data;
   var->data[1] = data;
 }
 
-INLINE void set_data_vector(df_parray_var_t *var, int vm, void **data_i,
+static void set_data_vector(df_parray_var_t *var, int vm, void **data_i,
                             void **data_j)
 {
   var->vector_mode = vm;
@@ -4502,67 +4502,67 @@ INLINE void set_data_vector(df_parray_var_t *var, int vm, void **data_i,
   var->data[1] = data_j;
 }
 
-INLINE double **get_data_2d(df_parray_var_t *var)
+static double **get_data_2d(df_parray_var_t *var)
 {
   return (*(double ***)var->data[0]);
 }
 
-INLINE double **get_data_vector_2d(df_parray_var_t *var, int comp)
+static double **get_data_vector_2d(df_parray_var_t *var, int comp)
 {
   return (*(double ***)var->data[comp]);
 }
 
-INLINE double ***get_data_3d(df_parray_var_t *var)
+static double ***get_data_3d(df_parray_var_t *var)
 {
   return (*(double ****)var->data[0]);
 }
 
-INLINE double ***get_data_vector_3d(df_parray_var_t *var, int comp)
+static double ***get_data_vector_3d(df_parray_var_t *var, int comp)
 {
   return (*(double ****)var->data[comp]);
 }
 
-INLINE void set_xyloc(df_parray_var_t *var, int xyloc)
+static void set_xyloc(df_parray_var_t *var, int xyloc)
 {
   var->xylocation[0] = xyloc;
   var->xylocation[1] = xyloc;
 }
 
-INLINE void set_xyloc_vector(df_parray_var_t *var, int xyloc_i,
+static void set_xyloc_vector(df_parray_var_t *var, int xyloc_i,
                              int xyloc_j)
 {
   var->xylocation[0] = xyloc_i;
   var->xylocation[1] = xyloc_j;
 }
 
-INLINE int get_xyloc(df_parray_var_t *var)
+static int get_xyloc(df_parray_var_t *var)
 {
   return var->xylocation[0];
 }
 
-INLINE int get_xyloc_vector(df_parray_var_t *var, int comp)
+static int get_xyloc_vector(df_parray_var_t *var, int comp)
 {
   return var->xylocation[comp];
 }
 
-INLINE void set_zloc(df_parray_var_t *var, int zloc)
+static void set_zloc(df_parray_var_t *var, int zloc)
 {
   var->zlocation[0] = zloc;
   var->zlocation[1] = zloc;
 }
 
-INLINE void set_zloc_vector(df_parray_var_t *var, int zloc_i, int zloc_j)
+static void set_zloc_vector(df_parray_var_t *var, int zloc_i, int zloc_j)
 {
   var->zlocation[0] = zloc_i;
   var->zlocation[1] = zloc_j;
 }
 
-INLINE int get_zloc(df_parray_var_t *var)
+static int get_zloc(df_parray_var_t *var)
 {
   return var->zlocation[0];
 }
 
-INLINE int get_zloc_vector(df_parray_var_t *var, int comp)
+static int get_zloc_vector(df_parray_var_t *var, int comp)
 {
   return var->zlocation[comp];
 }

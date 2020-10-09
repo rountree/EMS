@@ -1,0 +1,9 @@
+target_sources(shoc
+	PRIVATE
+	bdrycond.c
+	bdryeval.c
+	bdryfuncs.c
+	boundaryio.c
+	riverflow.c
+	tide.c
+)

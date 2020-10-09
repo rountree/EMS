@@ -1,6 +1,7 @@
 target_sources( libemslib
-	PRIVATE
+	PUBLIC
 	colourtable.c
+	eqn_parser.cpp
 	error_handlers.c
 	hash.c
 	hqueue.c
@@ -13,4 +14,11 @@ target_sources( libemslib
 	stringtable.c
 	time.c
 	tracer_utils.c
+)
+
+# Generates -D_GLIBCXX_GTHREAD_USE_WEAK=0 for this one file.
+set_property( 
+	SOURCE eqn_parser.cpp
+	TARGET_DIRECTORY libemslib
+	PROPERTY COMPILE_DEFINITIONS _GLIBCXX_GTHREAD_USE_WEAK=0
 )
